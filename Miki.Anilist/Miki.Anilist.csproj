@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Velddev</Authors>
+    <Company />
+    <Description>Anilist API 2.0 wrapper for easy and high performance use.</Description>
+    <PackageProjectUrl>https://github.com/Mikibot/Miki.Anilist</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Mikibot/Miki.Anilist</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>miki bot anilist api wrapper</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageReleaseNotes>First release</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Miki.Rest" Version="1.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Miki.GraphQL\Miki.GraphQL.csproj" />
+  </ItemGroup>
+
+</Project>

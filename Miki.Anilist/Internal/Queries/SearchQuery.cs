@@ -31,7 +31,7 @@ namespace Miki.Anilist.Internal.Queries
 		[JsonProperty("perPage")]
 		public int ItemsPerPage { get; internal set; }
 
-		public int TotalPages => TotalItems / ItemsPerPage;
+		public int TotalPages => (int)Math.Ceiling((double)TotalItems / ItemsPerPage);
 		public bool HasNextPage => CurrentPage < TotalPages;
 	}
 }

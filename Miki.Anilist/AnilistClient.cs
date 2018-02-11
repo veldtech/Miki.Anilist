@@ -41,7 +41,7 @@ namespace Miki.Anilist
 		/// <returns></returns>
 		public async Task<ISearchResult<ICharacterSearchResult>> SearchCharactersAsync(string name, int page = 0)
 		{
-			string query = "query($p0: Int, $p1: String){ Page(page: $p0, perPage: 25) { pageInfo{ total currentPage } characters(search: $p1) { id name{first last} } } }";
+			string query = "query($p0: Int, $p1: String){ Page(page: $p0, perPage: 25) { pageInfo{ total currentPage perPage } characters(search: $p1) { id name{first last} } } }";
 
 			return new SearchResult<AnilistCharacter>((await graph.QueryAsync<SearchQuery>(query, page, name)).Page)
 				.ToInterface<ICharacterSearchResult>();

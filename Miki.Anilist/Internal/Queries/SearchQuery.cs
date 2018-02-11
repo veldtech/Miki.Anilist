@@ -32,7 +32,6 @@ namespace Miki.Anilist.Internal.Queries
 		public int ItemsPerPage { get; internal set; }
 
 		public int TotalPages => TotalItems / ItemsPerPage;
-
 		public bool HasNextPage => CurrentPage < TotalPages;
 	}
 }

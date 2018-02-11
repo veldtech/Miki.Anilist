@@ -46,5 +46,15 @@ namespace Miki.Anilist
 			return new SearchResult<AnilistCharacter>((await graph.QueryAsync<SearchQuery>(query, page, name)).Page)
 				.ToInterface<ICharacterSearchResult>();
 		}
-    }
+
+		/// <summary>
+		/// Wrapper for the base query of Miki.GraphQL for when you need more than the current features
+		/// </summary>
+		/// <typeparam name="T">Type to serialize to</typeparam>
+		/// <param name="query">Graphql query text</param>
+		/// <param name="variables">Variables, use them like $p0, $p1... etc.</param>
+		/// <returns></returns>
+		public async Task<T> QueryAsync<T>(string query, params object[] variables)
+			=> await graph.QueryAsync<T>(query, variables);
+	}
 }

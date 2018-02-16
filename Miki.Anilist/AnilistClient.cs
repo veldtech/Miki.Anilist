@@ -2,7 +2,6 @@
 using Miki.Anilist.Internal.Queries;
 using Miki.GraphQL;
 using Newtonsoft.Json;
-using Rest;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

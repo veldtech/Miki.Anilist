@@ -23,14 +23,14 @@ namespace Miki.Anilist
 		/// <param name="name">The name of the character</param>
 		/// <returns>The first character or null if nothing found.</returns>
 		public async Task<ICharacter> GetCharacterAsync(string name)
-			=> (await graph.QueryAsync<CharacterQuery>("query($p0: String){ Character(search: $p0){ name{ first last native } description siteUrl id image{ large } } }", name)).Character;
+			=> (await graph.QueryAsync<CharacterQuery>("query($p0: String){ Character(search: $p0){ name{ first last native } description siteUrl id image{ large } } }", name))?.Character ?? null;
 		/// <summary>
 		/// Asynchronously gets the character paired to the id
 		/// </summary>
 		/// <param name="id">character id</param>
 		/// <returns>character</returns>
 		public async Task<ICharacter> GetCharacterAsync(long id)
-			=> (await graph.QueryAsync<CharacterQuery>("query($p0: Int){ Character(id: $p0){ name{ first last native } description siteUrl id image{ large } } }", id)).Character;
+			=> (await graph.QueryAsync<CharacterQuery>("query($p0: Int){ Character(id: $p0){ name{ first last native } description siteUrl id image{ large } } }", id))?.Character ?? null;
 
 		/// <summary>
 		/// Searches a character and returns the id and full name of a character

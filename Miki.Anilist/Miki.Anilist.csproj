@@ -15,11 +15,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Miki.GraphQL" Version="1.0.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Miki.Rest\Miki.Rest\Miki.Rest.csproj" />
+    <ProjectReference Include="..\..\Miki.GraphQL\Miki.GraphQL\Miki.GraphQL.csproj" />
   </ItemGroup>
 
 </Project>

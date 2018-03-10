@@ -5,17 +5,26 @@ using System.Text;
 
 namespace Miki.Anilist.Internal.Queries
 {
-    internal class SearchQuery
+    internal class SearchQuery<T>
     {
 		[JsonProperty("Page")]
-		internal SearchPage Page;
+		internal T Page;
     }
 
-	internal class SearchPage
+	internal class BasePage
 	{
 		[JsonProperty("pageInfo")]
 		internal PageInfo PageInfo;
+	}
 
+	internal class MediaPage : BasePage
+	{
+		[JsonProperty("media")]
+		internal List<AnilistMedia> Characters;
+	}
+
+	internal class CharacterPage : BasePage
+	{
 		[JsonProperty("characters")]
 		internal List<AnilistCharacter> Characters;
 	}

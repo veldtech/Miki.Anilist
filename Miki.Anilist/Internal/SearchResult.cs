@@ -12,7 +12,7 @@ namespace Miki.Anilist.Internal
 		PageInfo info;
 		List<T> items = new List<T>();
 
-		internal SearchResult(SearchPage q)
+		internal SearchResult(BasePage q)
 		{
 			info = q.PageInfo;
 

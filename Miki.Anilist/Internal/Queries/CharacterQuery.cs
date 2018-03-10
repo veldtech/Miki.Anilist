@@ -10,4 +10,10 @@ namespace Miki.Anilist.Internal.Queries
 		[JsonProperty("Character")]
 		internal AnilistCharacter Character;
 	}
+
+	internal class MediaQuery
+	{
+		[JsonProperty("Media")]
+		internal AnilistMedia Media;
+	}
 }

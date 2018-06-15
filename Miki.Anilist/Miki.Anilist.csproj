@@ -11,11 +11,11 @@
     <PackageTags>miki bot anilist api wrapper</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageReleaseNotes>First release</PackageReleaseNotes>
-    <Version>0.4.0</Version>
+    <Version>0.5.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Miki.GraphQL\Miki.GraphQL\Miki.GraphQL.csproj" />
+    <PackageReference Include="Miki.GraphQL" Version="1.0.4" />
   </ItemGroup>
 
 </Project>

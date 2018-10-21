@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Miki.Anilist", "Miki.Anilist/Miki.Anilist.csproj", "{009CB4E5-BA62-4CAF-B2EE-70AD4BCBBFF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Miki.Anilist", "Miki.Anilist\Miki.Anilist.csproj", "{009CB4E5-BA62-4CAF-B2EE-70AD4BCBBFF3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Miki.GraphQL", "..\Miki.GraphQL\Miki.GraphQL\Miki.GraphQL.csproj", "{DFEB9981-37DE-4094-A4DA-CC2BDE4B64BE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Miki.Anilist.Tests", "Miki.Anilist.Tests\Miki.Anilist.Tests.csproj", "{2FD8D203-9C90-48DE-821E-2551AE9DCBFB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{009CB4E5-BA62-4CAF-B2EE-70AD4BCBBFF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{009CB4E5-BA62-4CAF-B2EE-70AD4BCBBFF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{009CB4E5-BA62-4CAF-B2EE-70AD4BCBBFF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFEB9981-37DE-4094-A4DA-CC2BDE4B64BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFEB9981-37DE-4094-A4DA-CC2BDE4B64BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFEB9981-37DE-4094-A4DA-CC2BDE4B64BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFEB9981-37DE-4094-A4DA-CC2BDE4B64BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FD8D203-9C90-48DE-821E-2551AE9DCBFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FD8D203-9C90-48DE-821E-2551AE9DCBFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FD8D203-9C90-48DE-821E-2551AE9DCBFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FD8D203-9C90-48DE-821E-2551AE9DCBFB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,13 +1,15 @@
-﻿using Newtonsoft.Json;
+﻿using Miki.GraphQL.Queries;
+using Newtonsoft.Json;
 
 namespace Miki.Anilist.Internal
 {
+	[GraphQLSchema("coverImage")]
 	internal class AnilistImage
 	{
 		[JsonProperty("large")]
-		internal string Large;
+		internal string large;
 
 		[JsonProperty("medium")]
-		internal string Medium;
+		internal string medium;
 	}
 }

@@ -9,8 +9,8 @@ namespace Miki.Anilist.Internal
 		public string LastName => Name.Last;
 		public string NativeName => Name.Native;
 
-		public string LargeImageUrl => Image?.Large ?? Constants.NoImageUrl;
-		public string MediumImageUrl => Image?.Medium ?? Constants.NoImageUrl;
+		public string LargeImageUrl => Image?.large ?? Constants.NoImageUrl;
+		public string MediumImageUrl => Image?.medium ?? Constants.NoImageUrl;
 
 		long ICharacterSearchResult.Id => Id;
 		string ICharacter.Description => WebUtility.HtmlDecode(Description);

@@ -8,6 +8,6 @@ namespace Miki.Anilist
     public interface ISearchResult<T>
     {
 		PageInfo PageInfo { get; }
-		List<T> Items { get; }
+		IReadOnlyList<T> Items { get; }
     }
 }

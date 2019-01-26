@@ -1,33 +1,23 @@
 ﻿using Miki.Anilist.Internal.Queries;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 
 namespace Miki.Anilist.Internal
 {
 	internal class SearchResult<T> : ISearchResult<T>
 	{
 		public PageInfo PageInfo { get; }
-		public List<T> Items { get; } = new List<T>();
+		public IReadOnlyList<T> Items { get; }
 
-		internal SearchResult(BasePage q)
+		internal SearchResult(BasePage<T> q)
 		{
 			PageInfo = q.PageInfo;
+            Items = q.Items;
+        }
 
-			// TODO: maybe make this not use reflection?
-			var fields = q.GetType()
-				.GetRuntimeFields();
-
-			FieldInfo f = fields
-				.FirstOrDefault(x => x.FieldType == Items.GetType());
-
-			Items = f.GetValue(q) as List<T>;
-		}
-		internal SearchResult(PageInfo info, List<T> list)
+		internal SearchResult(PageInfo info, IReadOnlyList<T> list)
 		{
-			this.PageInfo = info;
+			PageInfo = info;
 			Items = list;
 		}
 
@@ -35,5 +25,5 @@ namespace Miki.Anilist.Internal
 		{
 			return new SearchResult<U>(PageInfo, Items.Cast<U>().ToList());
 		}
-	}
+    }
 }

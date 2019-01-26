@@ -71,7 +71,7 @@ namespace Miki.Anilist
 		{
 			string query = "query($p0: Int, $p1: String){ Page(page: $p0, perPage: 25) { pageInfo{ total currentPage perPage } characters(search: $p1) { id name{first last} } } }";
 
-			return new SearchResult<AnilistCharacter>((await graph.QueryAsync<SearchQuery<CharacterPage>>(query, page, name)).Page)
+			return new SearchResult<ICharacter>((await graph.QueryAsync<SearchQuery<CharacterPage>>(query, page, name)).Page)
 				.ToInterface<ICharacterSearchResult>();
 		}
 
@@ -89,7 +89,7 @@ namespace Miki.Anilist
 				"pageInfo{ total currentPage perPage }media(search: $p1," + (allowAdult ? "" : " isAdult: false,") + 
 				(filter.Length > 0  ? " format_not_in: $p2" : "") + "){ id title { userPreferred native english } } } }";
 
-			return new SearchResult<AnilistMedia>((await graph.QueryAsync<SearchQuery<MediaPage>>(query, page, name, filter)).Page)
+			return new SearchResult<IMedia>((await graph.QueryAsync<SearchQuery<MediaPage>>(query, page, name, filter)).Page)
 				.ToInterface<IMediaSearchResult>();
 		}
 

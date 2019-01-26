@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Miki.Anilist.Internal.Queries
 {
@@ -13,22 +12,28 @@ namespace Miki.Anilist.Internal.Queries
 		internal T Page;
     }
 
-	internal class BasePage
+    internal abstract class BasePage<TItem>
 	{
 		[JsonProperty("pageInfo")]
 		internal PageInfo PageInfo;
-	}
 
-	internal class MediaPage : BasePage
+        internal abstract IReadOnlyList<TItem> Items { get; }
+    }
+
+    internal class MediaPage : BasePage<IMedia>
 	{
 		[JsonProperty("media")]
-		internal List<AnilistMedia> Characters;
-	}
+		internal List<AnilistMedia> Medias;
 
-	internal class CharacterPage : BasePage
+        internal override IReadOnlyList<IMedia> Items => Medias;
+    }
+
+    internal class CharacterPage : BasePage<ICharacter>
 	{
 		[JsonProperty("characters")]
 		internal List<AnilistCharacter> Characters;
+
+        internal override IReadOnlyList<ICharacter> Items => Characters;
 	}
 
 	public class PageInfo

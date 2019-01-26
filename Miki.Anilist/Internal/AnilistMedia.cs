@@ -54,11 +54,11 @@ namespace Miki.Anilist.Internal
 
 		[JsonProperty("type")]
 		[GraphQLField("type")]
-		internal string mediaType;
+		internal MediaType mediaType;
 
 		[JsonProperty("format")]
 		[GraphQLField("format")]
-		internal string mediaFormat;
+		internal MediaFormat mediaFormat;
 
 		[JsonProperty("status")]
 		[GraphQLField("status")]
@@ -102,5 +102,6 @@ namespace Miki.Anilist.Internal
 		public int? Score => score;
 		public string Status => mediaStatus;
 		public string Url => siteUrl;
+        public MediaType Type => mediaType;
 	}
 }

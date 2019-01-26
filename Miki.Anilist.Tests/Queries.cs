@@ -1,4 +1,4 @@
-using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -52,12 +52,24 @@ namespace Miki.Anilist.Tests
 			Assert.NotNull(ch);
 		}
 
+        [Fact]
+        public async Task FindAnimesAndMangas()
+        {
+            AnilistClient client = new AnilistClient();
+            var ch = await client.SearchMediaAsync("miki");
+
+            Assert.True(ch.Items.Select(i => i.Type).Distinct().Count() == 2);
+            Assert.NotNull(ch);
+            Assert.NotEmpty(ch.Items);
+        }
+
 		[Fact]
 		public async Task FindAnimes()
 		{
 			AnilistClient client = new AnilistClient();
-			var ch = await client.SearchMediaAsync("miki");
+			var ch = await client.SearchMediaAsync("miki", type: MediaType.ANIME);
 
+            Assert.All(ch.Items, i => Assert.Equal(MediaType.ANIME, i.Type));
 			Assert.NotNull(ch);
 			Assert.NotEmpty(ch.Items);
 		}
@@ -66,8 +78,9 @@ namespace Miki.Anilist.Tests
 		public async Task FindMangas()
 		{
 			AnilistClient client = new AnilistClient();
-			var ch = await client.SearchMediaAsync("miki", filter: MediaFormat.MANGA);
+			var ch = await client.SearchMediaAsync("miki", type: MediaType.MANGA);
 
+            Assert.All(ch.Items, i => Assert.Equal(MediaType.MANGA, i.Type));
 			Assert.NotNull(ch);
 			Assert.NotEmpty(ch.Items);
 		}

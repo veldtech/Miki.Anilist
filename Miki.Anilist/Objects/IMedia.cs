@@ -8,7 +8,9 @@ namespace Miki.Anilist
 	{
 		int Id { get; }
 
-		string DefaultTitle { get; }
+        MediaType Type { get; }
+
+        string DefaultTitle { get; }
 
 		string EnglishTitle { get; }
 

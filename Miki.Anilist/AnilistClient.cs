@@ -1,10 +1,8 @@
-﻿using Miki.Anilist.Internal;
+﻿using System.Text;
+using Miki.Anilist.Internal;
 using Miki.Anilist.Internal.Queries;
 using Miki.GraphQL;
 using Miki.GraphQL.Queries;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Miki.Anilist
@@ -32,16 +30,17 @@ namespace Miki.Anilist
 		} 
 
 		/// <summary>
-		/// Asynchronously searches and returns the first anime
+		/// Asynchronously searches and returns the first media
 		/// </summary>
-		/// <param name="name">The name of the anime</param>
-		/// <returns>The first anime or null if nothing found.</returns>
+		/// <param name="name">The name of the media</param>
+		/// <returns>The first media or null if nothing found.</returns>
 		public async Task<IMedia> GetMediaAsync(string name, params MediaFormat[] filter)
 			=> (await getMediaByNameQuery.ExecuteAsync<MediaQuery>(("search", name), ("format_not_in", filter)))?.Media ?? null;
+
 		/// <summary>
 		/// Asynchronously gets the anime paired to the id
 		/// </summary>
-		/// <param name="name">The name of the anime</param>
+		/// <param name="id">The id of the media</param>
 		/// <returns>The first anime or null if nothing found.</returns>
 		public async Task<IMedia> GetMediaAsync(int id)
 			=> (await getMediaByIdQuery.ExecuteAsync<MediaQuery>(("id", id)))?.Media ?? null;
@@ -81,17 +80,32 @@ namespace Miki.Anilist
 		/// <param name="name">name to search for</param>
 		/// <param name="page">current page</param>
 		/// <returns></returns>
-		public async Task<ISearchResult<IMediaSearchResult>> SearchMediaAsync(string name, int page = 0, bool allowAdult = true, params MediaFormat[] filter)
+		public async Task<ISearchResult<IMediaSearchResult>> SearchMediaAsync(string name, int page = 0, bool allowAdult = true, MediaType? type = null, params MediaFormat[] filter)
 		{
-			// VERY BAD IMPLEMENTATION!!!
-			string query = 
-				@"query($p0: Int, $p1: String" + (filter.Length > 0 ? ",$p2 : [MediaFormat]" : "") + "){Page(page: $p0, perPage: 25) {"+
-				"pageInfo{ total currentPage perPage }media(search: $p1," + (allowAdult ? "" : " isAdult: false,") + 
-				(filter.Length > 0  ? " format_not_in: $p2" : "") + "){ id title { userPreferred native english } } } }";
+            //Build first line of query `query(params) {`
+            var query = new StringBuilder("query ($p0: Int, $p1: String");
+            if (filter.Length > 0)
+                query.Append(",$p2 : [MediaFormat]");
+            if (type.HasValue)
+                query.Append(", $p3: MediaType");
+            query.Append(") {");
 
-			return new SearchResult<IMedia>((await graph.QueryAsync<SearchQuery<MediaPage>>(query, page, name, filter)).Page)
-				.ToInterface<IMediaSearchResult>();
-		}
+            //Append `Page` part of query
+            query.Append("Page(page: $p0, perPage: 25) { pageInfo { total currentPage perPage }");
+
+            //Insert the parameters of the `media` section
+            query.Append("media(search: $p1");
+            if (filter.Length > 0)
+                query.Append(", format_not_in: $p2");
+            if (type.HasValue)
+                query.Append(", type: $p3");
+
+            //Add the main body of the media query and balance all the braces
+            query.Append(") { id type title { userPreferred native english } } } }");
+
+            return new SearchResult<IMedia>((await graph.QueryAsync<SearchQuery<MediaPage>>(query.ToString(), page, name, filter, type)).Page)
+                .ToInterface<IMediaSearchResult>();
+        }
 
 		/// <summary>
 		/// Wrapper for the base query of Miki.GraphQL for when you need more than the current features

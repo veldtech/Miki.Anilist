@@ -1,13 +1,13 @@
 ﻿using Miki.GraphQL.Queries;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Text;
 
 namespace Miki.Anilist.Internal
 {
-	[GraphQLSchema("Media")]
+    using Miki.Anilist.Objects;
+
+    [GraphQLSchema("Media")]
 	internal class AnilistMedia : IMedia
 	{
 		[JsonProperty("id")]
@@ -89,8 +89,7 @@ namespace Miki.Anilist.Internal
 
 		public string CoverImage => coverImage?.large ?? Constants.NoImageUrl;
 		public string DefaultTitle => title?.userPreferred;
-		public string Description => WebUtility.HtmlDecode(description ?? "")
-			.Replace("<br>", "\n");
+		public string Description => WebUtility.HtmlDecode(description ?? "").Replace("<br>", "\n");
 		public int? Duration => duration;
 		public int? Episodes => episodeCount;
 		public int? Volumes => volumes;
@@ -99,6 +98,7 @@ namespace Miki.Anilist.Internal
 		public IReadOnlyList<string> Genres => genres;
 		public int Id => id;
 		public string NativeTitle => title?.native;
+        public string RomajiTitle => title?.romaji;
 		public int? Score => score;
 		public string Status => mediaStatus;
 		public string Url => siteUrl;

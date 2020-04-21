@@ -1,12 +1,9 @@
-﻿using Miki.GraphQL.Queries;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Miki.Anilist.Internal
+﻿namespace Miki.Anilist.Internal
 {
-	[GraphQLSchema]
+    using Miki.GraphQL.Queries;
+    using Newtonsoft.Json;
+
+    [GraphQLSchema]
     internal class AnilistTitle
     {
 		[JsonProperty("romaji")]

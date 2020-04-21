@@ -1,20 +1,19 @@
-﻿using System.Text;
-using Miki.Anilist.Internal;
-using Miki.Anilist.Internal.Queries;
-using Miki.GraphQL;
-using Miki.GraphQL.Queries;
-using System.Threading.Tasks;
-
-namespace Miki.Anilist
+﻿namespace Miki.Anilist
 {
-    using Miki.Anilist.Objects;
-
+    using System.Text;
+    using Miki.Anilist.Internal;
+    using Miki.Anilist.Internal.Queries;
+	using Miki.Anilist.Objects;
+    using Miki.GraphQL;
+    using Miki.GraphQL.Queries;
+    using System.Threading.Tasks;
+    
     public class AnilistClient
     {
-		GraphQLClient graph;
+		private readonly GraphQLClient graph;
 
-		IGraphQLQuery getMediaByNameQuery;
-		IGraphQLQuery getMediaByIdQuery;
+		private readonly IGraphQLQuery getMediaByNameQuery;
+        private readonly IGraphQLQuery getMediaByIdQuery;
 
 		public AnilistClient()
 		{
@@ -45,7 +44,7 @@ namespace Miki.Anilist
 		/// <param name="id">The id of the media</param>
 		/// <returns>The first anime or null if nothing found.</returns>
 		public async Task<IMedia> GetMediaAsync(int id)
-			=> (await getMediaByIdQuery.ExecuteAsync<MediaQuery>(("id", id)))?.Media ?? null;
+			=> (await getMediaByIdQuery.ExecuteAsync<MediaQuery>(("id", id)))?.Media;
 
 		/// <summary>
 		/// Asynchronously searches and returns the first character
@@ -53,7 +52,8 @@ namespace Miki.Anilist
 		/// <param name="name">The name of the character</param>
 		/// <returns>The first character or null if nothing found.</returns>
 		public async Task<ICharacter> GetCharacterAsync(string name)
-			=> (await graph.QueryAsync<CharacterQuery>("query($p0: String){ Character(search: $p0){ name{ first last native } description siteUrl id image{ large } } }", name))?.Character ?? null;
+			=> (await graph.QueryAsync<CharacterQuery>(
+                   "query($p0: String){ Character(search: $p0){ name{ first last native } description siteUrl id image{ large } } }", name))?.Character;
 		/// <summary>
 		/// Asynchronously gets the character paired to the id
 		/// </summary>
@@ -82,7 +82,8 @@ namespace Miki.Anilist
 		/// <param name="name">name to search for</param>
 		/// <param name="page">current page</param>
 		/// <returns></returns>
-		public async Task<ISearchResult<IMediaSearchResult>> SearchMediaAsync(string name, int page = 0, bool allowAdult = true, MediaType? type = null, params MediaFormat[] filter)
+		public async Task<ISearchResult<IMediaSearchResult>> SearchMediaAsync(
+            string name, int page = 0, bool allowAdult = true, MediaType? type = null, params MediaFormat[] filter)
 		{
             //Build first line of query `query(params) {`
             var query = new StringBuilder("query ($p0: Int, $p1: String");
@@ -103,9 +104,11 @@ namespace Miki.Anilist
                 query.Append(", type: $p3");
 
             //Add the main body of the media query and balance all the braces
-            query.Append(") { id type title { userPreferred native english } } } }");
+            query.Append(") { id type title { userPreferred native english romaji } } } }");
 
-            return new SearchResult<IMedia>((await graph.QueryAsync<SearchQuery<MediaPage>>(query.ToString(), page, name, filter, type)).Page)
+            return new SearchResult<IMedia>(
+                    (await graph.QueryAsync<SearchQuery<MediaPage>>(
+                        query.ToString(), page, name, filter, type)).Page)
                 .ToInterface<IMediaSearchResult>();
         }
 

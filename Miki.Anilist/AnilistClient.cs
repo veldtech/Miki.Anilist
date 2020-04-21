@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace Miki.Anilist
 {
+    using Miki.Anilist.Objects;
+
     public class AnilistClient
     {
 		GraphQLClient graph;

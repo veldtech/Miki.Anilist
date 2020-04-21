@@ -1,20 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Miki.Anilist
+﻿namespace Miki.Anilist.Objects
 {
-	public interface IMediaSearchResult
+    using System.Collections.Generic;
+
+    public interface IMediaSearchResult
 	{
 		int Id { get; }
 
         MediaType Type { get; }
 
+		/// <summary>
+		/// User preferred title.
+		/// </summary>
         string DefaultTitle { get; }
 
+		/// <summary>
+		/// English title, if the series is available everywhere.
+		/// </summary>
 		string EnglishTitle { get; }
 
+		/// <summary>
+		/// Native kanji title
+		/// </summary>
 		string NativeTitle { get; }
+
+		/// <summary>
+		/// Romaji title
+		/// </summary>
+		string RomajiTitle { get; }
 	}
 
     public interface IMedia : IMediaSearchResult

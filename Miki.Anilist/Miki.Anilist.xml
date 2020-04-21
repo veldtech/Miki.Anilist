@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Miki.Anilist</name>
+    </assembly>
+    <members>
+        <member name="M:Miki.Anilist.AnilistClient.GetMediaAsync(System.String,Miki.Anilist.MediaFormat[])">
+            <summary>
+            Asynchronously searches and returns the first media
+            </summary>
+            <param name="name">The name of the media</param>
+            <returns>The first media or null if nothing found.</returns>
+        </member>
+        <member name="M:Miki.Anilist.AnilistClient.GetMediaAsync(System.Int32)">
+            <summary>
+            Asynchronously gets the anime paired to the id
+            </summary>
+            <param name="id">The id of the media</param>
+            <returns>The first anime or null if nothing found.</returns>
+        </member>
+        <member name="M:Miki.Anilist.AnilistClient.GetCharacterAsync(System.String)">
+            <summary>
+            Asynchronously searches and returns the first character
+            </summary>
+            <param name="name">The name of the character</param>
+            <returns>The first character or null if nothing found.</returns>
+        </member>
+        <member name="M:Miki.Anilist.AnilistClient.GetCharacterAsync(System.Int64)">
+            <summary>
+            Asynchronously gets the character paired to the id
+            </summary>
+            <param name="id">character id</param>
+            <returns>character</returns>
+        </member>
+        <member name="M:Miki.Anilist.AnilistClient.SearchCharactersAsync(System.String,System.Int32)">
+            <summary>
+            Searches a character and returns the id and full name of a character
+            </summary>
+            <param name="name">name to search for</param>
+            <param name="page">current page</param>
+            <returns></returns>
+        </member>
+        <member name="M:Miki.Anilist.AnilistClient.SearchMediaAsync(System.String,System.Int32,System.Boolean,System.Nullable{Miki.Anilist.MediaType},Miki.Anilist.MediaFormat[])">
+            <summary>
+            Searches a character and returns the id and full name of a character
+            </summary>
+            <param name="name">name to search for</param>
+            <param name="page">current page</param>
+            <returns></returns>
+        </member>
+        <member name="M:Miki.Anilist.AnilistClient.QueryAsync``1(System.String,System.Object[])">
+            <summary>
+            Wrapper for the base query of Miki.GraphQL for when you need more than the current features
+            </summary>
+            <typeparam name="T">Type to serialize to</typeparam>
+            <param name="query">Graphql query text</param>
+            <param name="variables">Variables, use them like $p0, $p1... etc.</param>
+            <returns></returns>
+        </member>
+        <member name="P:Miki.Anilist.Objects.IMediaSearchResult.DefaultTitle">
+            <summary>
+            User preferred title.
+            </summary>
+        </member>
+        <member name="P:Miki.Anilist.Objects.IMediaSearchResult.EnglishTitle">
+            <summary>
+            English title, if the series is available everywhere.
+            </summary>
+        </member>
+        <member name="P:Miki.Anilist.Objects.IMediaSearchResult.NativeTitle">
+            <summary>
+            Native kanji title
+            </summary>
+        </member>
+        <member name="P:Miki.Anilist.Objects.IMediaSearchResult.RomajiTitle">
+            <summary>
+            Romaji title
+            </summary>
+        </member>
+    </members>
+</doc>

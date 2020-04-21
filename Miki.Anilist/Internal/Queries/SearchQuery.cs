@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 namespace Miki.Anilist.Internal.Queries
 {
+    using Miki.Anilist.Objects;
+
     internal class SearchQuery<T>
     {
 		[JsonProperty("Page")]

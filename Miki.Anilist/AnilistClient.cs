@@ -54,6 +54,7 @@
 		public async Task<ICharacter> GetCharacterAsync(string name)
 			=> (await graph.QueryAsync<CharacterQuery>(
                    "query($p0: String){ Character(search: $p0){ name{ first last native } description siteUrl id image{ large } } }", name))?.Character;
+
 		/// <summary>
 		/// Asynchronously gets the character paired to the id
 		/// </summary>
@@ -76,13 +77,48 @@
 				.ToInterface<ICharacterSearchResult>();
 		}
 
-		/// <summary>
-		/// Searches a character and returns the id and full name of a character
-		/// </summary>
-		/// <param name="name">name to search for</param>
-		/// <param name="page">current page</param>
-		/// <returns></returns>
-		public async Task<ISearchResult<IMediaSearchResult>> SearchMediaAsync(
+        public async Task<ISearchResult<IMediaSearchResult>> GetSeasonAsync(int year, MediaSeason season,
+            int page = 0, bool allowAdult = true, MediaType? type = null, params MediaFormat[] filter)
+        {
+            //Build first line of query `query(params) {`
+            var query = new StringBuilder("query ($p0: Int, $p1: MediaSeason, $p2: Int");
+            if (filter.Length > 0)
+                query.Append(",$p3 : [MediaFormat]");
+            if (type.HasValue)
+                query.Append(", $p4: MediaType");
+            query.Append(") {");
+
+            //Append `Page` part of query
+            query.Append("Page(page: $p0, perPage: 25) { pageInfo { total currentPage perPage }");
+
+            //Insert the parameters of the `media` section
+            query.Append("media(season: $p1, seasonYear: $p2");
+            if (filter.Length > 0)
+                query.Append(", format_not_in: $p3");
+            if (type.HasValue)
+                query.Append(", type: $p4");
+            if (!allowAdult)
+                query.Append(", isAdult: false");
+
+            //Add the main body of the media query and balance all the braces
+            query.Append(") { id type title { userPreferred native english romaji } } } }");
+
+            return new SearchResult<IMedia>(
+                    (await graph.QueryAsync<SearchQuery<MediaPage>>(
+                        query.ToString(), page, season, year, filter, type)).Page)
+                .ToInterface<IMediaSearchResult>();
+}
+
+        /// <summary>
+        /// Searches a character and returns the id and full name of a character
+        /// </summary>
+        /// <param name="name">name to search for</param>
+        /// <param name="page">current page</param>
+        /// <param name="allowAdult"></param>
+        /// <param name="type"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public async Task<ISearchResult<IMediaSearchResult>> SearchMediaAsync(
             string name, int page = 0, bool allowAdult = true, MediaType? type = null, params MediaFormat[] filter)
 		{
             //Build first line of query `query(params) {`
@@ -102,6 +138,8 @@
                 query.Append(", format_not_in: $p2");
             if (type.HasValue)
                 query.Append(", type: $p3");
+            if (!allowAdult)
+                query.Append(", isAdult: false");
 
             //Add the main body of the media query and balance all the braces
             query.Append(") { id type title { userPreferred native english romaji } } } }");

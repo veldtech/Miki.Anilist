@@ -84,5 +84,17 @@ namespace Miki.Anilist.Tests
 			Assert.NotNull(ch);
 			Assert.NotEmpty(ch.Items);
 		}
+
+        [Fact]
+        public async Task GetSeason()
+        {
+            AnilistClient client = new AnilistClient();
+            var ch = await client.GetSeasonAsync(2021, MediaSeason.WINTER, type: MediaType.ANIME);
+
+            Assert.All(ch.Items, i => Assert.Equal(MediaType.ANIME, i.Type));
+            Assert.NotNull(ch);
+            Assert.NotEmpty(ch.Items);
+			Assert.Contains(ch.Items, a => a.Id == 106503);
+        }
 	}
 }
